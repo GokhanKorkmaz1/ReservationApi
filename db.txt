@@ -1,0 +1,54 @@
+CREATE TABLE [dbo].[Trains] (
+    [Id]   INT           IDENTITY (1, 1) NOT NULL,
+    [Name] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+SET IDENTITY_INSERT [dbo].[Trains] ON
+INSERT INTO [dbo].[Trains] ([Id], [Name]) VALUES (1, N'Blue Train')
+INSERT INTO [dbo].[Trains] ([Id], [Name]) VALUES (2, N'Golden Arrow')
+SET IDENTITY_INSERT [dbo].[Trains] OFF
+
+CREATE TABLE [dbo].[Waggons] (
+    [Id]                    INT           IDENTITY (1, 1) NOT NULL,
+    [TrainId]               INT           NOT NULL,
+    [Name]                  NVARCHAR (50) NOT NULL,
+    [Capacity]              INT           NOT NULL,
+    [NumberofReservedSeats] INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+SET IDENTITY_INSERT [dbo].[Waggons] ON
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (1, 1, N'Waggon1', 100, 50)
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (2, 1, N'Waggon2', 90, 30)
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (3, 1, N'Waggon3', 120, 100)
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (4, 1, N'Waggon4', 80, 76)
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (5, 2, N'Waggon1', 100, 60)
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (6, 2, N'Waggon2', 100, 19)
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (7, 2, N'Waggon3', 100, 70)
+INSERT INTO [dbo].[Waggons] ([Id], [TrainId], [Name], [Capacity], [NumberofReservedSeats]) VALUES (8, 2, N'Waggon4', 100, 68)
+SET IDENTITY_INSERT [dbo].[Waggons] OFF
+
+CREATE TABLE [dbo].[Reservations] (
+    [Id]                      INT IDENTITY (1, 1) NOT NULL,
+    [TrainId]                 INT NOT NULL,
+    [NumberofPassenger]       INT NOT NULL,
+    [IsAllowDifferentWaggons] BIT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[ReservationResponses] (
+    [Id]            INT IDENTITY (1, 1) NOT NULL,
+    [ReservationId] INT NOT NULL,
+    [IsReservable]  BIT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[PlacementDetails] (
+    [Id]                    INT IDENTITY (1, 1) NOT NULL,
+    [ReservationResponseId] INT NOT NULL,
+    [WaggonId]              INT NOT NULL,
+    [NumberofPeople]        INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
